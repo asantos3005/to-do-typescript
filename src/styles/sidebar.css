@@ -1,0 +1,29 @@
+aside{
+    background-color: rgb(116, 176, 236);
+    height: 100%;
+    transition: width 0.3s ease;
+    overflow: hidden;
+
+}
+
+aside.expanded{
+    width: 20rem;
+}
+
+aside.collapsed{
+    width: 0;
+}
+aside div{
+    display: flex;
+    padding-left: 1rem;
+}
+
+.profileMenu{
+    margin-bottom: 5rem;
+}
+
+.sidebarToggle{
+    width: 30px;
+    margin-left: auto;
+    padding-right: 5px;
+}

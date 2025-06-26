@@ -1,4 +1,5 @@
-//import sidebarIcon from "../icons/sidebarIcon.svg";
+import sidebarIcon from "../assets/sidebarIcon.svg";
+import '../styles/sidebar.css'
 
 type SideBarProps = {
   sidebarState: "open" | "closed";
@@ -10,7 +11,7 @@ export default function SideBar({ sidebarState, toggleSideBar }: SideBarProps) {
     <aside className={`sidebar ${sidebarState === "open" ? "expanded" : "collapsed"}`} id="sidebar">
       <div className="profileMenu">
         <p>Profile</p>
-        {/* <img src={sidebarIcon} alt="Toggle Sidebar" onClick={toggleSideBar} className="sidebarToggle clickable" />*/}
+        <img src={sidebarIcon} alt="Toggle Sidebar" onClick={toggleSideBar} className="sidebarToggle clickable" />
       </div>
       <div className="addTaskMenu clickable"><p>Add Task</p></div>
       <div className="todayMenu clickable"><p>Today</p></div>
