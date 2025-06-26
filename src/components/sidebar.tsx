@@ -10,7 +10,7 @@ export default function SideBar({ sidebarState, toggleSideBar }: SideBarProps) {
   return (
     <aside className={`sidebar ${sidebarState === "open" ? "expanded" : "collapsed"}`} id="sidebar">
       <div className="profileMenu">
-        <p>Profile</p>
+        <p id="profileLink">Profile</p>
         <img src={sidebarIcon} alt="Toggle Sidebar" onClick={toggleSideBar} className="sidebarToggle clickable" />
       </div>
       <div className="addTaskMenu clickable"><p>Add Task</p></div>

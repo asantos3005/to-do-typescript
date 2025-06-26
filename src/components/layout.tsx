@@ -1,6 +1,8 @@
 import { useState, } from "react";
 import SideBar from "./sidebar";
 import React from "react";
+import sidebarIcon from "../assets/sidebarIcon.svg";
+
 
 interface SidebarProps {
   sidebarState: "open" | "closed";
@@ -20,6 +22,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="app-container">
       <SideBar sidebarState={sidebarState} toggleSideBar={toggleSideBar} />
+      <img className="mainSbToggle" src={sidebarIcon} onClick={toggleSideBar} alt="Toggle Sidebar" />
       {React.cloneElement(children as React.ReactElement<SidebarProps>, {
         sidebarState,
         toggleSideBar,

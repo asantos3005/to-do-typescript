@@ -19,7 +19,12 @@ aside div{
 }
 
 .profileMenu{
+    margin-top: 1rem;
     margin-bottom: 5rem;
+}
+
+#profileLink{
+    margin: 0;
 }
 
 .sidebarToggle{
