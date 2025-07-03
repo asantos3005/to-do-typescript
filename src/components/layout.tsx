@@ -1,33 +1,29 @@
-import { useState, } from "react";
-import SideBar from "./sidebar";
-import React from "react";
+import { useState } from "react";
+import { Outlet } from "react-router-dom";
+import SideBar from "./Sidebar";
 import sidebarIcon from "../assets/sidebarIcon.svg";
 
+export default function Layout() {
+  const [sidebarState, setSidebarState] = useState<"open" | "closed">("open");
 
-interface SidebarProps {
-  sidebarState: "open" | "closed";
-  toggleSideBar: () => void;
-}
-
-
-export default function Layout({ children }: { children: React.ReactNode }) {
-    const [sidebarState, setSidebarState] = useState<"open" | "closed">("open");
-    
-    function toggleSideBar() {
-        const newState = sidebarState === "open" ? "closed" : "open";
-        setSidebarState(newState);
-        console.log("Sidebar toggled:", newState);
-    }
+  function toggleSideBar() {
+    const newState = sidebarState === "open" ? "closed" : "open";
+    setSidebarState(newState);
+    console.log("Sidebar toggled:", newState);
+  }
 
   return (
     <div className="app-container">
       <SideBar sidebarState={sidebarState} toggleSideBar={toggleSideBar} />
-      <img className="mainSbToggle" src={sidebarIcon} onClick={toggleSideBar} alt="Toggle Sidebar" />
-      {React.cloneElement(children as React.ReactElement<SidebarProps>, {
-        sidebarState,
-        toggleSideBar,
-        })}
+      <img
+        className="mainSbToggle"
+        src={sidebarIcon}
+        onClick={toggleSideBar}
+        alt="Toggle Sidebar"
+      />
 
+      {/* 👇 This is where the child routes will render */}
+      <Outlet context={{ sidebarState, toggleSideBar }} />
     </div>
   );
 }

@@ -1,22 +1,19 @@
-import { BrowserRouter, Routes, } from 'react-router-dom';
-import Layout from '../components/layout';
-import '../styles/App.css'
-//import Home from './pages/Home';
-//import Settings from './pages/Settings';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "../components/Layout";
+import Home from "./Home";
+import Settings from "./Settings";
 
 function App() {
   return (
     <BrowserRouter>
-      <Layout>
-        <Routes>
-            {/* 
-          <Route path="/" element={<Home />} />
-          <Route path="/settings" element={<Settings />} />
-            */}
-        </Routes>
-      </Layout>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }
 
-export default App
+export default App;
