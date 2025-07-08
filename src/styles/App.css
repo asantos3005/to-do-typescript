@@ -1,6 +1,7 @@
 body {
   margin: 0;
   height: 100vh;
+  color: azure;
 }
 
 #root {
@@ -11,7 +12,7 @@ body {
 .app-container{
   display: flex;
   height: inherit;
-  background-color: rgb(135, 195, 255);
+  background-color: rgb(18, 24, 43);
 }
 
 .mainSbToggle{
@@ -24,6 +25,34 @@ main {
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+button:hover{
+  opacity: 70%;
+}
+
+.todoListContainer{
+  width: 80%;
+}
+
+.toDoItem{
+  background-color: rgba(56, 73, 134, 0.568);
+  display: flex;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+}
+
+.toDoItem:hover{
+  box-shadow: 10px 5px 5px rgba(6, 5, 25, 0.639);
+}
+
+.tickToDoButton{
+  background-color: azure;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 10px;
+  margin-left: 1rem;
+  margin-right: 2rem;
 }
 
 

@@ -24,6 +24,7 @@ type ToDoItemProps = {
   itemName: string;
   priority: number;
   isDone: boolean;
+  onDelete: (id: number) => void;
 };
 
 type PriorityItem = {
@@ -31,31 +32,44 @@ type PriorityItem = {
   label?: string;
 };
 
-interface LayoutContext {
-  sidebarState: SidebarState;
-  toggleSideBar: () => void;
-}
-
-// Components
-function ToDoItem({ id, itemName, priority, isDone }: ToDoItemProps) {
-  return (
-    <div className="toDoItem">
-      <p>{itemName} - {isDone ? "Done" : "Pending"}</p>
-      <p>Priority: {priority}</p>
-    </div>
-  );
-}
-
-const AddTaskButton: React.FC<{ handleAddTask: () => void }> = ({ handleAddTask }) => (
-  <div className="addItemButton clickable" onClick={handleAddTask}>
-    + Add Item
-  </div>
-);
+type AddTaskButtonProps = {
+  handleAddTask: () => void;
+};
 
 type PriorityDropdownProps = {
   selected: PriorityItem | null;
   onSelect: (item: PriorityItem) => void;
 };
+
+
+
+// Components
+function ToDoItem({ id, itemName, priority, isDone, onDelete }: ToDoItemProps) {
+  return (
+    <div className="toDoItem">
+      <div className="buttonContainer">
+        <button className="button-reset tickToDoButton" onClick={() => onDelete(id)}>
+
+        </button>
+      </div>
+      <div className="detailsContianer">
+        <p>{itemName} - {isDone ? "Done" : "Pending"}</p>
+        <p>Priority: {priority}</p>
+      </div>
+
+    </div>
+  );
+}
+
+
+function AddTaskButton({ handleAddTask }: AddTaskButtonProps) {
+  return (
+    <button  className='button-reset clickable' onClick={handleAddTask}>
+      + Add Item
+    </button>
+  );
+}
+
 
 function PriorityDropdown({ selected, onSelect }: PriorityDropdownProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -89,17 +103,12 @@ function PriorityDropdown({ selected, onSelect }: PriorityDropdownProps) {
   );
 }
 
-// Main Page Component
-type SidebarState = "open" | "closed";
-
-interface HomeProps {
-  sidebarState: SidebarState;
-  toggleSideBar: () => void;
-}
 
 export default function Home() {
   const [todoItems, setTodoItems] = useState<ToDoItemProps[]>([]);
   const [modal, setModal] = useState(false);
+
+  // The state of a form
   const [formState, setFormState] = useState<{
     taskName: string;
     priority: PriorityItem | null;
@@ -126,6 +135,32 @@ export default function Home() {
     }));
   };
 
+    // Add new task
+  const handleCreateTask = () => {
+    if (!formState.taskName || !formState.priority) return;
+
+    const newTask: ToDoItemProps = {
+      id: Date.now(),
+      itemName: formState.taskName,
+      priority: parseInt(formState.priority.label?.slice(1) || "3"), // Extract number from "P1"
+      isDone: formState.isDone,
+      onDelete: handleDeleteTask
+    };
+
+    setTodoItems((prev) => [...prev, newTask]);
+
+    // Reset form and close modal
+    setFormState({ taskName: '', priority: null, isDone: false });
+    toggle();
+  };
+
+ const handleDeleteTask = (idToDelete: number) => {
+  const updatedItems = todoItems.filter(item => item.id !== idToDelete);
+  setTodoItems(updatedItems);
+  console.log(`Item ID: `,{idToDelete})
+  console.log('Item Deleted')
+};
+
   const toggle = () => setModal(!modal);
 
   // Load data from localStorage
@@ -144,23 +179,7 @@ export default function Home() {
     localStorage.setItem("toDoListContainer", JSON.stringify({ toDoList: todoItems }));
   }, [todoItems]);
 
-  // Add new task
-  const handleCreateTask = () => {
-    if (!formState.taskName || !formState.priority) return;
 
-    const newTask: ToDoItemProps = {
-      id: Date.now(),
-      itemName: formState.taskName,
-      priority: parseInt(formState.priority.label?.slice(1) || "3"), // Extract number from "P1"
-      isDone: formState.isDone
-    };
-
-    setTodoItems((prev) => [...prev, newTask]);
-
-    // Reset form and close modal
-    setFormState({ taskName: '', priority: null, isDone: false });
-    toggle();
-  };
 
   return (
     <main>
@@ -168,7 +187,7 @@ export default function Home() {
         <h1 className="todoTitle">ToDo List</h1>
         <div className="screenDivider"></div>
 
-        <AddTaskButton handleAddTask={toggle} />
+      
 
         <Modal isOpen={modal} toggle={toggle} centered>
           <ModalHeader toggle={toggle}>New Task</ModalHeader>
@@ -204,8 +223,12 @@ export default function Home() {
             priority={item.priority}
             itemName={item.itemName}
             isDone={item.isDone}
+            onDelete={handleDeleteTask}
           />
         ))}
+
+        <AddTaskButton handleAddTask={toggle} />
+
       </div>
     </main>
   );

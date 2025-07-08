@@ -15,3 +15,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/*Button Element Reset*/
+.button-reset {
+  all: unset;
+  cursor: pointer;
+
+}
+
+
