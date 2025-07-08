@@ -11,12 +11,19 @@ body {
 .app-container{
   display: flex;
   height: inherit;
+  background-color: rgb(135, 195, 255);
 }
 
 .mainSbToggle{
   width: 30px;
   align-self: flex-start;
   padding-top: 1rem;
+}
+
+main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 

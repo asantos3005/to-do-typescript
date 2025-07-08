@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { useOutletContext } from "react-router-dom";
-import sidebarIcon from "../assets/sidebarIcon.svg";
 import p1Icon from "../assets/p1.svg";
 import p2Icon from "../assets/p2.svg";
 import p3Icon from "../assets/p3.svg";
@@ -100,9 +98,6 @@ interface HomeProps {
 }
 
 export default function Home() {
-  const { sidebarState, toggleSideBar } = useOutletContext<LayoutContext>();
-
-
   const [todoItems, setTodoItems] = useState<ToDoItemProps[]>([]);
   const [modal, setModal] = useState(false);
   const [formState, setFormState] = useState<{
@@ -169,13 +164,6 @@ export default function Home() {
 
   return (
     <main>
-      <img
-        src={sidebarIcon}
-        alt="Toggle Sidebar"
-        onClick={toggleSideBar}
-        className={`mainSidebarToggle clickable ${sidebarState === "open" ? "hidden" : "showing"}`}
-      />
-
       <div className="todoListContainer">
         <h1 className="todoTitle">ToDo List</h1>
         <div className="screenDivider"></div>

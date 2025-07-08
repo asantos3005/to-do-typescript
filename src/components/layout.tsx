@@ -15,15 +15,19 @@ export default function Layout() {
   return (
     <div className="app-container">
       <SideBar sidebarState={sidebarState} toggleSideBar={toggleSideBar} />
-      <img
-        className="mainSbToggle"
-        src={sidebarIcon}
-        onClick={toggleSideBar}
-        alt="Toggle Sidebar"
-      />
+      <div>
+        <img
+          className="mainSbToggle"
+          src={sidebarIcon}
+          onClick={toggleSideBar}
+          alt="Toggle Sidebar"
+        />
+      </div>
+
 
       {/* 👇 This is where the child routes will render */}
       <Outlet context={{ sidebarState, toggleSideBar }} />
+
     </div>
   );
 }
