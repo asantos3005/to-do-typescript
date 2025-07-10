@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import p1Icon from "../assets/p1.svg";
 import p2Icon from "../assets/p2.svg";
 import p3Icon from "../assets/p3.svg";
+import tickSound from '../assets/tick.mp3';
+
 import {
   Button,
   Modal,
@@ -64,7 +66,7 @@ function ToDoItem({ id, itemName, priority, isDone, onDelete }: ToDoItemProps) {
 
 function AddTaskButton({ handleAddTask }: AddTaskButtonProps) {
   return (
-    <button  className='button-reset clickable' onClick={handleAddTask}>
+    <button  className='button-reset clickable addTaskButton' onClick={handleAddTask}>
       + Add Item
     </button>
   );
@@ -154,12 +156,19 @@ export default function Home() {
     toggle();
   };
 
- const handleDeleteTask = (idToDelete: number) => {
+  const handleDeleteTask = (idToDelete: number) => {
+  // Tick Sound Feedback
+  const clickSound = new Audio(tickSound);
+  clickSound.play();
+
   const updatedItems = todoItems.filter(item => item.id !== idToDelete);
   setTodoItems(updatedItems);
   console.log(`Item ID: `,{idToDelete})
   console.log('Item Deleted')
 };
+
+
+
 
   const toggle = () => setModal(!modal);
 
