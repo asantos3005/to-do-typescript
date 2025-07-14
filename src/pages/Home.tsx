@@ -20,13 +20,22 @@ import {
   DropdownItem
 } from "reactstrap";
 
+
 // Types
 type ToDoItemProps = {
   id: number;
   itemName: string;
   priority: number;
   isDone: boolean;
+  dueDate: Date | null; // <- allow null here
   onDelete: (id: number) => void;
+};
+
+type FormState = {
+  taskName: string;
+  priority: PriorityItem | null;
+  isDone: boolean;
+  dueDate: string;
 };
 
 type PriorityItem = {
@@ -46,7 +55,7 @@ type PriorityDropdownProps = {
 
 
 // Components
-function ToDoItem({ id, itemName, priority, isDone, onDelete }: ToDoItemProps) {
+function ToDoItem({ id, itemName, priority, isDone, dueDate, onDelete }: ToDoItemProps) {
   return (
     <div className="toDoItem">
       <div className="buttonContainer">
@@ -55,6 +64,7 @@ function ToDoItem({ id, itemName, priority, isDone, onDelete }: ToDoItemProps) {
         </button>
       </div>
       <div className="detailsContianer">
+        <p>Due: {dueDate ? dueDate.toLocaleDateString() : "No due date"}</p>
         <p>{itemName} - {isDone ? "Done" : "Pending"}</p>
         <p>Priority: {priority}</p>
       </div>
@@ -111,15 +121,12 @@ export default function Home() {
   const [modal, setModal] = useState(false);
 
   // The state of a form
-  const [formState, setFormState] = useState<{
-    taskName: string;
-    priority: PriorityItem | null;
-    isDone: boolean;
-  }>({
-    taskName: '',
-    priority: null,
-    isDone: false
-  });
+  const [formState, setFormState] = useState<FormState>({
+  taskName: '',
+  priority: null,
+  isDone: false,
+  dueDate: ''
+});
 
   // Update form state on input change
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,23 +145,30 @@ export default function Home() {
   };
 
     // Add new task
-  const handleCreateTask = () => {
-    if (!formState.taskName || !formState.priority) return;
+const handleCreateTask = () => {
+  if (!formState.taskName || !formState.priority) return;
 
-    const newTask: ToDoItemProps = {
-      id: Date.now(),
-      itemName: formState.taskName,
-      priority: parseInt(formState.priority.label?.slice(1) || "3"), // Extract number from "P1"
-      isDone: formState.isDone,
-      onDelete: handleDeleteTask
-    };
-
-    setTodoItems((prev) => [...prev, newTask]);
-
-    // Reset form and close modal
-    setFormState({ taskName: '', priority: null, isDone: false });
-    toggle();
+  const newTask: ToDoItemProps = {
+    id: Date.now(),
+    itemName: formState.taskName,
+    priority: parseInt(formState.priority.label?.slice(1) || "3"),
+    isDone: formState.isDone,
+    dueDate: formState.dueDate ? new Date(formState.dueDate) : null, // 👈 CONVERT here
+    onDelete: handleDeleteTask
   };
+
+  setTodoItems((prev) => [...prev, newTask]);
+
+  setFormState({
+    taskName: '',
+    priority: null,
+    isDone: false,
+    dueDate: ''
+  });
+
+  toggle();
+};
+
 
   const handleDeleteTask = (idToDelete: number) => {
   // Tick Sound Feedback
@@ -217,8 +231,20 @@ export default function Home() {
                 <Label>Priority</Label>
                 <PriorityDropdown selected={formState.priority} onSelect={handlePriorityChange} />
               </FormGroup>
+               <FormGroup>
+                <Label for="exampleDate">
+                  Date
+                </Label>
+                <Input
+                  id="exampleDate"
+                  name="dueDate"
+                  type="date"
+                  value={formState.dueDate}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
             </Form>
-          </ModalBody>
+          </ModalBody> 
           <ModalFooter>
             <Button color="primary" onClick={handleCreateTask}>Create</Button>
             <Button color="secondary" onClick={toggle}>Cancel</Button>
@@ -232,6 +258,7 @@ export default function Home() {
             priority={item.priority}
             itemName={item.itemName}
             isDone={item.isDone}
+            dueDate={item.dueDate}
             onDelete={handleDeleteTask}
           />
         ))}

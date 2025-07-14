@@ -15,6 +15,7 @@ export default function Layout() {
   return (
     <div className="app-container">
       <SideBar sidebarState={sidebarState} toggleSideBar={toggleSideBar} />
+      {sidebarState === "closed" && (
       <div>
         <img
           className="mainSbToggle"
@@ -23,6 +24,7 @@ export default function Layout() {
           alt="Toggle Sidebar"
         />
       </div>
+    )}
 
 
       {/* 👇 This is where the child routes will render */}
