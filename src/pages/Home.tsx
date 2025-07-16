@@ -4,16 +4,14 @@ import p2Icon from "../assets/p2.svg";
 import p3Icon from "../assets/p3.svg";
 import tickSound from '../assets/tick.mp3';
 
+import ModalForm from '../components/modalForm'
+
 import {
   Button,
   Modal,
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Input,
-  FormGroup,
-  Form,
-  Label,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
@@ -31,9 +29,9 @@ type ToDoItemProps = {
   onDelete: (id: number) => void;
 };
 
-type FormState = {
+type TaskFormData = {
   taskName: string;
-  priority: PriorityItem | null;
+  priority: string;
   isDone: boolean;
   dueDate: string;
 };
@@ -52,7 +50,7 @@ type PriorityDropdownProps = {
   onSelect: (item: PriorityItem) => void;
 };
 
-
+//
 
 // Components
 function ToDoItem({ id, itemName, priority, isDone, dueDate, onDelete }: ToDoItemProps) {
@@ -120,55 +118,21 @@ export default function Home() {
   const [todoItems, setTodoItems] = useState<ToDoItemProps[]>([]);
   const [modal, setModal] = useState(false);
 
-  // The state of a form
-  const [formState, setFormState] = useState<FormState>({
-  taskName: '',
-  priority: null,
-  isDone: false,
-  dueDate: ''
-});
-
-  // Update form state on input change
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormState((prev) => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handlePriorityChange = (item: PriorityItem) => {
-    setFormState((prev) => ({
-      ...prev,
-      priority: item
-    }));
-  };
 
     // Add new task
-const handleCreateTask = () => {
-  if (!formState.taskName || !formState.priority) return;
-
+  const handleFormSubmit = (formData:TaskFormData) => {
   const newTask: ToDoItemProps = {
     id: Date.now(),
-    itemName: formState.taskName,
-    priority: parseInt(formState.priority.label?.slice(1) || "3"),
-    isDone: formState.isDone,
-    dueDate: formState.dueDate ? new Date(formState.dueDate) : null, // 👈 CONVERT here
+    itemName: formData.taskName,
+    priority: parseInt(formData.priority?.slice(1) || "3"),
+    isDone: false,
+    dueDate: formData.dueDate ? new Date(formData.dueDate) : null,
     onDelete: handleDeleteTask
   };
 
   setTodoItems((prev) => [...prev, newTask]);
-
-  setFormState({
-    taskName: '',
-    priority: null,
-    isDone: false,
-    dueDate: ''
-  });
-
-  toggle();
+  toggle(); // close modal
 };
-
 
   const handleDeleteTask = (idToDelete: number) => {
   // Tick Sound Feedback
@@ -215,39 +179,9 @@ const handleCreateTask = () => {
         <Modal isOpen={modal} toggle={toggle} centered>
           <ModalHeader toggle={toggle}>New Task</ModalHeader>
           <ModalBody>
-            <Form>
-              <FormGroup>
-                <Label for="taskName">Task Name</Label>
-                <Input
-                  id="taskName"
-                  name="taskName"
-                  placeholder="Enter name of the task"
-                  type="text"
-                  value={formState.taskName}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Priority</Label>
-                <PriorityDropdown selected={formState.priority} onSelect={handlePriorityChange} />
-              </FormGroup>
-               <FormGroup>
-                <Label for="exampleDate">
-                  Date
-                </Label>
-                <Input
-                  id="exampleDate"
-                  name="dueDate"
-                  type="date"
-                  value={formState.dueDate}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
-            </Form>
+            <ModalForm onSubmit={handleFormSubmit} />
           </ModalBody> 
           <ModalFooter>
-            <Button color="primary" onClick={handleCreateTask}>Create</Button>
-            <Button color="secondary" onClick={toggle}>Cancel</Button>
           </ModalFooter>
         </Modal>
 
