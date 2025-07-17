@@ -16,7 +16,7 @@ export default function Layout() {
     <div className="app-container">
       <SideBar sidebarState={sidebarState} toggleSideBar={toggleSideBar} />
       {sidebarState === "closed" && (
-      <div>
+      <div className="toggleContainer">
         <img
           className="mainSbToggle"
           src={sidebarIcon}

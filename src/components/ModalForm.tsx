@@ -8,11 +8,32 @@ export default function ModalForm({ onSubmit }: ModalFormProps) {
   const { register, handleSubmit } = useForm();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+<form onSubmit={handleSubmit(onSubmit)}>
+  <div className="modalFormContainer">
+
+    <div className="formGroup">
+      <label>Task Name</label>
       <input {...register("taskName")} placeholder="Enter task name" />
-      <input {...register("priority")} placeholder="Enter priority" />
-      <input {...register("dueDate")} placeholder="Enter due date" />
-      <input type="submit" /> {/* hidden so you can trigger from parent button if needed */}
-    </form>
+    </div>
+
+    <div className="formGroup">
+      <label>Priority</label>
+      <select {...register("priority")} className="form-control">
+        <option value="">Select Priority</option>
+        <option value="P1">P1</option>
+        <option value="P2">P2</option>
+        <option value="P3">P3</option>
+      </select>
+    </div>
+
+    <div className="formGroup">
+      <label>Due Date</label>
+      <input {...register("dueDate")} type="date" placeholder="Enter due date" />
+    </div>
+
+    <input type="submit" value="Create Task"/>
+    
+  </div>
+</form>
   );
 }

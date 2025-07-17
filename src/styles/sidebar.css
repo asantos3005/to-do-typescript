@@ -1,5 +1,5 @@
 aside{
-    background-color: rgb(116, 176, 236);
+    background-color: rgb(31, 40, 70);
     height: 100%;
     transition: width 0.3s ease;
     overflow: hidden;
@@ -28,7 +28,7 @@ aside div{
 }
 
 .sidebarToggle{
-    width: 30px;
+    width: 25px;
     margin-left: auto;
     padding-right: 5px;
 }

@@ -1,21 +1,18 @@
 import { useEffect, useState } from "react";
-import p1Icon from "../assets/p1.svg";
-import p2Icon from "../assets/p2.svg";
-import p3Icon from "../assets/p3.svg";
 import tickSound from '../assets/tick.mp3';
 
 import ModalForm from '../components/modalForm'
 
 import {
-  Button,
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
+  /*
   Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem
+  */
 } from "reactstrap";
 
 
@@ -36,21 +33,25 @@ type TaskFormData = {
   dueDate: string;
 };
 
-type PriorityItem = {
-  icon?: string;
-  label?: string;
-};
 
 type AddTaskButtonProps = {
   handleAddTask: () => void;
 };
 
+
+// Part of old priority dropdown poor design component
+/* 
 type PriorityDropdownProps = {
   selected: PriorityItem | null;
   onSelect: (item: PriorityItem) => void;
 };
 
-//
+type PriorityItem = {
+  icon?: string;
+  label?: string;
+};
+*/
+
 
 // Components
 function ToDoItem({ id, itemName, priority, isDone, dueDate, onDelete }: ToDoItemProps) {
@@ -80,7 +81,8 @@ function AddTaskButton({ handleAddTask }: AddTaskButtonProps) {
   );
 }
 
-
+/* Example of input design - uses reactstrap dropdown component which is custom component not built on top of native input elements and has a custom value type */
+/*
 function PriorityDropdown({ selected, onSelect }: PriorityDropdownProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen(!dropdownOpen);
@@ -112,7 +114,7 @@ function PriorityDropdown({ selected, onSelect }: PriorityDropdownProps) {
     </Dropdown>
   );
 }
-
+*/
 
 export default function Home() {
   const [todoItems, setTodoItems] = useState<ToDoItemProps[]>([]);
@@ -181,8 +183,6 @@ export default function Home() {
           <ModalBody>
             <ModalForm onSubmit={handleFormSubmit} />
           </ModalBody> 
-          <ModalFooter>
-          </ModalFooter>
         </Modal>
 
         {todoItems.map((item) => (

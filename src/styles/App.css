@@ -12,11 +12,15 @@ body {
 .app-container{
   display: flex;
   height: inherit;
-  background-color: rgb(18, 24, 43);
+  background-color: rgb(45, 59, 104);
+}
+
+.toggleContainer{
+  margin-left: 1rem;
 }
 
 .mainSbToggle{
-  width: 30px;
+  width: 20px;
   align-self: flex-start;
   padding-top: 1rem;
 }
@@ -25,6 +29,7 @@ main {
   width: 100%;
   display: flex;
   justify-content: center;
+  padding-top: 1rem;
 }
 
 button:hover{
@@ -40,7 +45,7 @@ button:hover{
 }
 
 .toDoItem{
-  background-color: rgba(56, 73, 134, 0.568);
+  background-color: rgb(31, 40, 70);
   display: flex;
   border-radius: 5px;
   margin-bottom: 0.5rem;
@@ -65,4 +70,27 @@ button:hover{
   margin-right: 2rem;
 }
 
+.modalFormContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem; 
+}
+
+
+
+/*Form Styling*/
+
+input{
+  border-color: #70707034;
+  border-width: 0.1px;
+  border-radius: 5px;
+  padding: 0.375rem;
+  color: 70707034;
+}
 
