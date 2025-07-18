@@ -45,10 +45,23 @@ export default function ModalForm({ onSubmit }: ModalFormProps) {
           {errors.priority && <p className="error">{errors.priority.message}</p>}
         </div>
 
-        <div className="formGroup">
-          <label>Due Date</label>
-          <input {...register("dueDate")} type="date" placeholder="Enter due date" />
-        </div>
+        <input
+          type="date"
+          placeholder="Enter due date"
+          {...register("dueDate", {
+            required: "Due date is required",
+            validate: (value) => {
+              const today = new Date();
+              today.setHours(0, 0, 0, 0); 
+              const selectedDate = new Date(value);
+              if (selectedDate < today) {
+                return "Due date cannot be in the past";
+              }
+              return true;
+            },
+          })}
+        />
+        {errors.dueDate && <p className="error">{errors.dueDate.message}</p>}
 
         <input type="submit" value="Create Task" />
       </div>
