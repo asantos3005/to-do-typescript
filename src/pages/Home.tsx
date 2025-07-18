@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import tickSound from '../assets/tick.mp3';
 
-import ModalForm from '../components/modalForm'
+import ModalForm from '../components/ModalForm'
 
 import {
   Modal,
@@ -53,6 +53,7 @@ type PriorityItem = {
 */
 
 
+//
 // Components
 function ToDoItem({ id, itemName, priority, isDone, dueDate, onDelete }: ToDoItemProps) {
   return (
