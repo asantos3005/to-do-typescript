@@ -20,7 +20,7 @@ import {
 type ToDoItemProps = {
   id: number;
   itemName: string;
-  priority: number;
+  priority: string;
   isDone: boolean;
   dueDate: Date | null; // <- allow null here
   onDelete: (id: number) => void;
@@ -55,18 +55,35 @@ type PriorityItem = {
 
 //
 // Components
-function ToDoItem({ id, itemName, priority, isDone, dueDate, onDelete }: ToDoItemProps) {
-  return (
-    <div className="toDoItem">
-      <div className="buttonContainer">
-        <button className="button-reset tickToDoButton" onClick={() => onDelete(id)}>
 
-        </button>
+// This component represent the visual reprsentation of a To Do Item
+function ToDoItem({ id, itemName, priority, dueDate, onDelete }: ToDoItemProps) {
+  const getPriorityClass = (priority: string) => {
+      switch (priority) {
+        case "P1":
+          return "pri-one";
+        case "P2":
+          return "pri-two";
+        case "P3":
+          return "pri-three";
+        default:
+          return "";
+      }
+    };
+
+  return (
+    <div className={`toDoItem ${getPriorityClass(priority)}`}>
+      <div className="buttonContainer">
+        <div>
+          <button className="button-reset tickToDoButton" onClick={() => onDelete(id)}>
+          </button>
+        </div>
+
       </div>
       <div className="detailsContianer">
-        <p>Due: {dueDate ? dueDate.toLocaleDateString() : "No due date"}</p>
-        <p>{itemName} - {isDone ? "Done" : "Pending"}</p>
-        <p>Priority: {priority}</p>
+        <h1 className="detailSection">{itemName}</h1>
+        <p className="detailSection">Due: {dueDate ? dueDate.toLocaleDateString() : "No due date"}</p>
+        <p className="detailSection">Priority: {priority}</p>
       </div>
 
     </div>
@@ -122,12 +139,12 @@ export default function Home() {
   const [modal, setModal] = useState(false);
 
 
-    // Add new task
+    // Add new task to the LocalStorage list
   const handleFormSubmit = (formData:TaskFormData) => {
   const newTask: ToDoItemProps = {
     id: Date.now(),
     itemName: formData.taskName,
-    priority: parseInt(formData.priority?.slice(1) || "3"),
+    priority: formData.priority/*parseInt(formData.priority?.slice(1) || "3")*/,
     isDone: false,
     dueDate: formData.dueDate ? new Date(formData.dueDate) : null,
     onDelete: handleDeleteTask

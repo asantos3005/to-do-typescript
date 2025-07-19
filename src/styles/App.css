@@ -32,6 +32,13 @@ main {
   padding-top: 1rem;
 }
 
+/* ToDo Items Styles */ 
+
+.buttonContainer{
+  justify-content: center;
+  align-content: center;
+}
+
 button:hover{
   opacity: 70%;
 }
@@ -48,7 +55,7 @@ button:hover{
   background-color: rgb(31, 40, 70);
   display: flex;
   border-radius: 5px;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .toDoItem:hover{
@@ -62,12 +69,25 @@ button:hover{
 }
 
 .tickToDoButton{
+  display: block;
   background-color: azure;
   width: 1rem;
   height: 1rem;
   border-radius: 10px;
   margin-left: 1rem;
   margin-right: 2rem;
+}
+
+.detailsContianer{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 7rem;
+}
+
+.detailSection{
+  margin-bottom: 0;
 }
 
 .modalFormContainer {
@@ -83,9 +103,22 @@ button:hover{
 }
 
 
+.pri-one {
+  background-color: #e74c3c; /* Red for P1 */
+}
+
+.pri-two {
+  background-color: #f39c12; /* Orange for P2 */
+}
+
+.pri-three {
+  background-color: #2ecc71; /* Green for P3 */
+}
+
+
+
 
 /*Form Styling*/
-
 input{
   border-color: #70707034;
   border-width: 0.1px;
