@@ -6,13 +6,7 @@ import ModalForm from '../components/ModalForm'
 import {
   Modal,
   ModalHeader,
-  ModalBody,
-  /*
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
-  */
+  ModalBody
 } from "reactstrap";
 
 
@@ -55,6 +49,7 @@ type PriorityItem = {
 
 //
 // Components
+//
 
 // This component represent the visual reprsentation of a To Do Item
 function ToDoItem({ id, itemName, priority, dueDate, onDelete }: ToDoItemProps) {
@@ -82,8 +77,10 @@ function ToDoItem({ id, itemName, priority, dueDate, onDelete }: ToDoItemProps) 
       </div>
       <div className="detailsContianer">
         <h1 className="detailSection">{itemName}</h1>
-        <p className="detailSection">Due: {dueDate ? dueDate.toLocaleDateString() : "No due date"}</p>
-        <p className="detailSection">Priority: {priority}</p>
+        <div className="lowerDetailsRow">
+          <p className="detailSection">Priority {priority}</p>
+          <p className="detailSection">Due: {dueDate ? dueDate.toLocaleDateString() : "No due date"}</p>
+        </div>
       </div>
 
     </div>
@@ -164,9 +161,6 @@ export default function Home() {
   console.log(`Item ID: `,{idToDelete})
   console.log('Item Deleted')
 };
-
-
-
 
   const toggle = () => setModal(!modal);
 

@@ -79,15 +79,23 @@ button:hover{
 }
 
 .detailsContianer{
-  width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: start;
   min-height: 7rem;
 }
 
 .detailSection{
   margin-bottom: 0;
+  margin-right: 2rem;
+}
+
+.lowerDetailsRow{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .modalFormContainer {
